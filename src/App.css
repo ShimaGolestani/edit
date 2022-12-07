@@ -3,7 +3,34 @@
 @tailwind utilities;
 
 
+.scrollbar-thumb-rounded {
+  border-radius: 20px !important; }
+  
+  .scrollbar::-webkit-scrollbar {
+      width: 10px !important;
+      height: 10px !important;
+    }
+  
+  .scrollbar::-webkit-scrollbar-track {
+      border-radius: 100vh !important;
+      background: #f7f4ed;
+  }
+  
+  .scrollbar::-webkit-scrollbar-thumb {
+      background: #e0cbcb;
+      border-radius: 100vh !important;
+      border: 1px solid #f6f7ed;
+  }
+  
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #c0a0b9;
+  }
 
+  @layer utilities {
+    .scrollbar-medium::-webkit-scrollbar {
+      width: 12px;
+    }
+  }
 
 .tbody{
   overflow-y: scroll;

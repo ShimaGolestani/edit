@@ -48,7 +48,7 @@ const Signup = () => {
     if (!values.phonenumber) {
       errors.phonenumber = "شماره موبایل خود را وارد کنید";
     } else if (
-      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(
+      !/^(\+98|0098|98|0)?9\d{9}$/.test(
         values.phonenumber
       )
     ) {

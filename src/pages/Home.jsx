@@ -31,8 +31,9 @@ import ModalComments from "../components/ModalComments";
 import Sidebar from "../components/layout/sidebar/Sidebar";
 import Search from "../components/layout/search/Search";
 import DealCard from "../../src/components/DealCard/DealCard";
-import usePopupp from "../../../internship-main/src/hooks/usePopup";
+import usePopupp from "../../src/hooks/usePopup";
 import usePopup from "../hooks/usePopup";
+import styles from "./Home.module.css";
 
 const Home = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -196,11 +197,13 @@ const Home = () => {
   }, [chartArea, chartCandle, chartAreaSymbol]);
 
   const [symbolName, setSymbolName] = useState();
-
+  var fa = require("apexcharts/dist/locales/fa.json");
   const options = {
     chart: {
       type: "candlestick",
       height: 350,
+      locales: [fa],
+      defaultLocale: "fa",
     },
     bar: {
       dataLabels: {
@@ -213,8 +216,23 @@ const Home = () => {
     },
     xaxis: {
       type: "datetime",
+      labels: {
+        formatter: function (value) {
+          const test = new Date(value);
+          return test.toLocaleTimeString("fa-IR", {
+            // en-US can be set to 'default' to use user's browser settings
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+        },
+      },
     },
     yaxis: {
+      labels: {
+        formatter: function (value) {
+          return new Intl.NumberFormat("fa-IR").format(value);
+        },
+      },
       tooltip: {
         enabled: true,
       },
@@ -243,8 +261,8 @@ const Home = () => {
     if (lastDeals.length > 0) {
       return (
         <>
-          <div className="flex-1 bg-green-tbl rounded-tr-2.5x rounded-br-2.5x">
-            <div className="flex h-10 bg-green-h-tbl rounded-tr-2.5x items-center text-sm justify-between px-2 ">
+          <div className={`flex-1 bg-green-tbl   `}>
+            <div className="flex h-16 bg-green-h-tbl rounded-tr-2.5x items-center text-sm justify-between px-2 ">
               <div>تعداد</div>
               <div>حجم</div>
               <div>قیمت</div>
@@ -255,17 +273,17 @@ const Home = () => {
                   return (
                     <div
                       key={item.insCode}
-                      className="flex justify-between px-2 text-sm h-10 border-t border-green-h-tbl items-center"
+                      className="flex justify-between px-2 text-sm h-12 border-t border-green-h-tbl items-center"
                     >
-                      <div>{item.numberOfSupply}</div>
-                      <div>{item.supplyVolume}</div>
-                      <div>{item.supplyPrice}</div>
+                      <div>{item.numberOfSupply.toLocaleString?.("fa-IR")}</div>
+                      <div>{item.supplyVolume.toLocaleString?.("fa-IR")}</div>
+                      <div>{item.supplyPrice.toLocaleString?.("fa-IR")}</div>
                     </div>
                   );
                 })}
           </div>
-          <div className="flex-1 bg-red-tbl red-h-tbl rounded-tl-2.5x rounded-bl-2.5x text-black">
-            <div className="flex h-10 bg-red-h-tbl rounded-tl-2.5x items-center text-sm justify-between px-2">
+          <div className="flex-1 bg-red-tbl red-h-tbl text-black">
+            <div className="flex h-16 bg-red-h-tbl rounded-tl-2.5x items-center text-sm justify-between px-2">
               <div>تعداد</div>
               <div>حجم</div>
               <div>قیمت</div>
@@ -276,11 +294,11 @@ const Home = () => {
                   return (
                     <div
                       key={item.insCode}
-                      className="flex justify-between px-2 text-sm h-10 border-t border-red-h-tbl items-center"
+                      className="flex justify-between px-2 text-sm h-12 border-t border-red-h-tbl items-center"
                     >
-                      <div>{item.numberOfDemand}</div>
-                      <div>{item.demandVolume}</div>
-                      <div>{item.demandPrice}</div>
+                      <div>{item.numberOfDemand.toLocaleString?.("fa-IR")}</div>
+                      <div>{item.demandVolume.toLocaleString?.("fa-IR")}</div>
+                      <div>{item.demandPrice.toLocaleString?.("fa-IR")}</div>
                     </div>
                   );
                 })}
@@ -291,64 +309,64 @@ const Home = () => {
       return (
         <>
           <div className="flex-1 bg-green-tbl rounded-tr-2.5x rounded-br-2.5x ">
-            <div className="flex h-10 bg-green-h-tbl rounded-tr-2.5x items-center text-sm justify-between px-2 ">
+            <div className="flex h-16 bg-green-h-tbl rounded-tr-2.5x items-center text-sm justify-between px-2 ">
               <div>تعداد</div>
               <div>حجم</div>
               <div>قیمت</div>
             </div>
-            <div className="flex justify-between px-2 text-sm h-10 border-t border-green-h-tbl items-center">
+            <div className="flex justify-between px-2 text-sm h-12 border-t border-green-h-tbl items-center">
               <div>0</div>
               <div>0</div>
               <div>0</div>
             </div>
-            <div className="flex justify-between px-2 text-sm h-10 border-t border-green-h-tbl items-center">
+            <div className="flex justify-between px-2 text-sm h-12 border-t border-green-h-tbl items-center">
               <div>0</div>
               <div>0</div>
               <div>0</div>
             </div>
-            <div className="flex justify-between px-2 text-sm h-10 border-t border-green-h-tbl items-center">
+            <div className="flex justify-between px-2 text-sm h-12 border-t border-green-h-tbl items-center">
               <div>0</div>
               <div>0</div>
               <div>0</div>
             </div>
-            <div className="flex justify-between px-2 text-sm h-10 border-t border-green-h-tbl items-center">
+            <div className="flex justify-between px-2 text-sm h-12 border-t border-green-h-tbl items-center">
               <div>0</div>
               <div>0</div>
               <div>0</div>
             </div>
-            <div className="flex justify-between px-2 text-sm h-10 border-t border-green-h-tbl items-center">
+            <div className="flex justify-between px-2 text-sm h-12 border-t border-green-h-tbl items-center">
               <div>0</div>
               <div>0</div>
               <div>0</div>
             </div>
           </div>
           <div className="flex-1 bg-red-tbl red-h-tbl rounded-tl-2.5x rounded-bl-2.5x text-black">
-            <div className="flex h-10 bg-red-h-tbl red-h-tbl rounded-tl-2.5x items-center text-sm justify-between px-2">
+            <div className="flex h-16 bg-red-h-tbl red-h-tbl rounded-tl-2.5x items-center text-sm justify-between px-2">
               <div>تعداد</div>
               <div>حجم</div>
               <div>قیمت</div>
             </div>
-            <div className="flex justify-between px-2 text-sm h-10 border-t border-red-h-tbl items-center">
+            <div className="flex justify-between px-2 text-sm h-12 border-t border-red-h-tbl items-center">
               <div>0</div>
               <div>0</div>
               <div>0</div>
             </div>
-            <div className="flex justify-between px-2 text-sm h-10 border-t border-red-h-tbl items-center">
+            <div className="flex justify-between px-2 text-sm h-12 border-t border-red-h-tbl items-center">
               <div>0</div>
               <div>0</div>
               <div>0</div>
             </div>
-            <div className="flex justify-between px-2 text-sm h-10 border-t border-red-h-tbl items-center">
+            <div className="flex justify-between px-2 text-sm h-12 border-t border-red-h-tbl items-center">
               <div>0</div>
               <div>0</div>
               <div>0</div>
             </div>
-            <div className="flex justify-between px-2 text-sm h-10 border-t border-red-h-tbl items-center">
+            <div className="flex justify-between px-2 text-sm h-12 border-t border-red-h-tbl items-center">
               <div>0</div>
               <div>0</div>
               <div>0</div>
             </div>
-            <div className="flex justify-between px-2 text-sm h-10 border-t border-red-h-tbl items-center">
+            <div className="flex justify-between px-2 text-sm h-12 border-t border-red-h-tbl items-center">
               <div>0</div>
               <div>0</div>
               <div>0</div>
@@ -365,32 +383,34 @@ const Home = () => {
         <Col
           md={12}
           lg={3}
-          className="bg-back-color flex flex-col desktop:h-full p-8 desktop:flex-1 desktop:rounded-5xl"
+          className="bg-back-color flex flex-col desktop:h-full p-8 desktop:flex-1 desktop:rounded-5xl "
         >
           <Sidebar />
         </Col>
         <Col
-          className="nopadding bg-white flex-1  desktop:h-full desktop:rounded-5xl"
+          className="nopadding bg-rose-50 flex-1  desktop:h-full desktop:rounded-5xlc rounded-5xl"
           md={12}
           lg={9}
         >
-          <div className="dektop:p-8 px-4 desktop:mt-0 mt-3 ">
-            <div className="flex ">
-              <div className="w-1/5 ml-2">
+          <div className="dektop:p-8 px-4 desktop:mt-0 mt-3 mb-1">
+            <div className="flex bg-white rounded-full">
+              <div className="w-1/5 ml-2 mt-2 mr-2">
                 <label className="text-black bg-search-color rounded-full mb-2 h-10 w-full text-center relative">
                   {" "}
                   {symbolName}{" "}
                 </label>
               </div>
-              <div className="relative w-4/5">
+              <div className="relative w-4/5 mt-2 ml-2">
                 <Search />
               </div>
             </div>
-            <div className=" mb-1 max-h-48  h-48 border-2 rounded-3xl  overflow-y-auto  scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-100">
-              <Table className=" fixTableHead  px-1">
+            <div
+              className={`mb-1 mt-1   h-48 border-2 rounded-3xl    overflow-y-scroll scrollbar scrollbar-thumb-rose-500 scrollbar-track-gray-100 scrollbar-medium   ${styles.homeShadow}`}
+            >
+              <Table className=" fixTableHead  px-1 bg-white rounded-xl ">
                 <thead className="">
                   <tr className="text-sm ">
-                    <th className="rounded-tr-2.5x py-3 text-center">
+                    <th className="rounded-tr-2.5x py-3 text-center ">
                       لیست نماد
                     </th>
                     <th className="py-3 text-center">تعداد</th>
@@ -405,7 +425,7 @@ const Home = () => {
                 {isLoading ? (
                   loadingSvg
                 ) : (
-                  <tbody className=" tbody text-sm">
+                  <tbody className=" tbody text-sm ">
                     {symbols.map((item) => {
                       var regex = new RegExp(["w*" + search + "w*"]);
                       if (search == "" || regex.test(item.symbol))
@@ -422,12 +442,18 @@ const Home = () => {
                             >
                               {item.symbol}
                             </td>
-                            <td className="text-center">{item.tradesCount}</td>
                             <td className="text-center">
-                              {item.finalTradePrice}
+                              {item.tradesCount.toLocaleString?.("fa-IR")}
                             </td>
-                            <td className="text-center">{item.closePrice}</td>
-                            <td className="text-center">{item.tradesVolume}</td>
+                            <td className="text-center">
+                              {item.finalTradePrice.toLocaleString?.("fa-IR")}
+                            </td>
+                            <td className="text-center">
+                              {item.closePrice.toLocaleString?.("fa-IR")}
+                            </td>
+                            <td className="text-center">
+                              {item.tradesVolume.toLocaleString?.("fa-IR")}
+                            </td>
                             <td className="text-center flex justify-center">
                               {favorite?.find(
                                 (o) => o.insCode === item.insCode
@@ -456,13 +482,17 @@ const Home = () => {
                 )}
               </Table>
             </div>
-            <Row className="nopadding mt-4 justify-between gap-1 text-black ">
-              <Col md={12} lg={5} className="overflow-y-auto flex  h-64 mt-4">
+            <Row className="nopadding mt-4 justify-between gap-1 text-black space-evenly bg-white rounded-xl">
+              <Col
+                md={12}
+                lg={5}
+                className={`overflow-y-auto flex  h-auto mt-1 mr-1 mb-1 p-0 ${styles.homeShadow}`}
+              >
                 {renderDeals()}
                 {/* <DealCard /> */}
               </Col>
               <Col
-                className="overflow-y-hidden dekstop:h-64 nopadding "
+                className={`overflow-y-hidden dekstop:h-auto ml-1 px-0 mt-1 mb-1 candlechartmargin ${styles.homeShadow}`}
                 md={12}
                 lg={6}
               >
@@ -477,9 +507,9 @@ const Home = () => {
               </Col>
             </Row>
 
-            <div className=" mt-3 justify-between flex flex-col desktop:flex-row ">
+            <div className=" mt-3  flex flex-col desktop:flex-row gap-2 justify-center">
               <Col
-                className="bg-candle flex-1 rounded-2xl pt-3 "
+                className={`bg-candle flex-1 rounded-2xl pt-3 `}
                 md={12}
                 lg={6}
               >
@@ -490,8 +520,8 @@ const Home = () => {
                   height={300}
                 />
               </Col>
-              <Col className="" md={12} lg={6}>
-                <div className="max-h-[400px]  h-full border-2 rounded-3xl  overflow-y-auto  scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-100">
+              <Col className={styles.homeShadow} md={12} lg={6}>
+                <div className="max-h-[400px]  h-full border-2 rounded-3xl   overflow-y-scroll scrollbar scrollbar-thumb-rose-500 scrollbar-track-gray-100 scrollbar-medium bg-white ">
                   <Table className="fixTableHead">
                     <thead className="bg-table-header">
                       <tr className="text-sm">
@@ -511,12 +541,18 @@ const Home = () => {
                         return (
                           <tr key={item.insCode} style={{ cursor: "pointer" }}>
                             <td className="text-center">{item.symbol}</td>
-                            <td className="text-center">{item.tradesCount}</td>
                             <td className="text-center">
-                              {item.finalTradePrice}
+                              {item.tradesCount.toLocaleString?.("fa-IR")}
                             </td>
-                            <td className="text-center">{item.closePrice}</td>
-                            <td className="text-center">{item.tradesVolume}</td>
+                            <td className="text-center">
+                              {item.finalTradePrice.toLocaleString?.("fa-IR")}
+                            </td>
+                            <td className="text-center">
+                              {item.closePrice.toLocaleString?.("fa-IR")}
+                            </td>
+                            <td className="text-center">
+                              {item.tradesVolume.toLocaleString?.("fa-IR")}
+                            </td>
                           </tr>
                         );
                       })}
@@ -529,8 +565,8 @@ const Home = () => {
         </Col>
       </Row>
 
-      <ModalAddComment />
-      <ModalComments />
+      {/* <ModalAddComment />
+      <ModalComments /> */}
     </div>
   );
 };

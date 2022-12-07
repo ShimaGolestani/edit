@@ -9,13 +9,15 @@ import Navbar from "../Navbar";
 import useAuth from "../../hooks/useAuth";
 import { handleTokenExipration } from "../../Utils/RefreshToken";
 import jwtDecode from "jwt-decode";
+import { useSnackbar } from "notistack";
 
 const Signin = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const [isLoading, setIsLoading] = useState(false);
 
   const token = localStorage.getItem("accessToken");
   const navigate = useNavigate();
-  const { isValid } = useAuth();
+  const { isValid, SetUser } = useAuth();
   const captcha = useRef();
 
   if (isValid) {
@@ -35,25 +37,52 @@ const Signin = () => {
       username: values.code,
       password: values.password,
     };
+    try {
+      const { status, data } = await axios.post(
+        url,
+        JSON.stringify(jsonObject),
+        customConfig
+      );
 
-    const { status, data } = await axios.post(
-      url,
-      JSON.stringify(jsonObject),
-      customConfig
-    );
-    if (status < 300) {
-      setIsLoading(false);
-      if (data.hasOwnProperty("token")) {
-        localStorage.setItem("accessToken", data.token);
-        localStorage.setItem("Token", JSON.stringify(data));
-        const { exp } = jwtDecode(data.token);
+      if (status < 300) {
+        enqueueSnackbar("ورود با موفقیت انجام شد", {
+          variant: "success",
+          autoHideDuration: 5000,
+          anchorOrigin: { vertical: "top", horizontal: "left" },
+        });
+        debugger;
+        localStorage.setItem("username", values.code);
 
-        handleTokenExipration({ exp });
-        /// ---------------------------------------
-        navigate("/");
-      } else {
-        console.log(data.data); // msg: username and password not valid
+        SetUser(values.code);
+        setIsLoading(false);
+
+        if (data.hasOwnProperty("token")) {
+          localStorage.setItem("accessToken", data.token);
+          localStorage.setItem("Token", JSON.stringify(data));
+          const { exp } = jwtDecode(data.token);
+
+          handleTokenExipration({ exp });
+          /// ---------------------------------------
+          navigate("/");
+        } else {
+          setIsLoading(false);
+          enqueueSnackbar("ورود  ناموفق ", {
+            variant: "error",
+            autoHideDuration: 5000,
+            anchorOrigin: { vertical: "top", horizontal: "left" },
+          });
+        }
       }
+    } catch (error) {
+      setIsLoading(false);
+      enqueueSnackbar(
+        error?.response?.data?.msg ? error.response.data.msg : "ورود  ناموفق ",
+        {
+          variant: "error",
+          autoHideDuration: 5000,
+          anchorOrigin: { vertical: "top", horizontal: "left" },
+        }
+      );
     }
   };
 

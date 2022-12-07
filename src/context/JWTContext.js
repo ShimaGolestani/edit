@@ -9,9 +9,11 @@ import axiosInstance from "../config/axios";
 import { Token } from "../Constants/LocalStorageConstants";
 
 const JWTContext = React.createContext({
+  username: null,
   isValid: false,
   TokenValidator: () => {},
   signOut: () => {},
+  SetUser: () => {},
 });
 
 const handler = {
@@ -21,10 +23,17 @@ const handler = {
       isValid: action.payload,
     };
   },
+  SETUSER: (state, action) => {
+    return {
+      ...state,
+      username: action.payload,
+    };
+  },
 };
 
 const initial = {
   isValid: false,
+  username: null,
 };
 
 const Reducer = (state, action) =>
@@ -34,8 +43,16 @@ const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(Reducer, initial);
   useEffect(() => {
     const token = localStorage.getItem(Token);
+
+    const user = localStorage.getItem("username");
+    if (user) {
+      SetUser(user);
+    }
     TokenValidator(token);
   }, []);
+  const SetUser = (username) => {
+    dispatch({ type: "SETUSER", payload: username });
+  };
   const TokenValidator = (accessToken) => {
     if (!accessToken) {
       dispatch({ type: "ISVALID", payload: false });
@@ -80,7 +97,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <JWTContext.Provider value={{ ...state, TokenValidator, signOut }}>
+    <JWTContext.Provider value={{ ...state, TokenValidator, signOut, SetUser }}>
       {children}
     </JWTContext.Provider>
   );

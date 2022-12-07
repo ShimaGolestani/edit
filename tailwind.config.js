@@ -11,6 +11,7 @@ module.exports = {
         candle: "#F6FEFD",
         "green-tbl": "#CEF5F2",
         "green-h-tbl": "#7BE5DB",
+        "green-h":"#6ecec5",
         "red-tbl": "rgba(255, 99, 129, 0.35)",
         "red-h-tbl": "rgba(255, 99, 129, 0.35)",
         "search-color": "rgba(255, 99, 129, 0.14)",

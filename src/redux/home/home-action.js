@@ -18,6 +18,7 @@ export const SET_SHOW_STATS = "SET_SHOW_STATS";
 export const SET_CANDLE_SELECTED = "SET_CANDLE_SELECTED";
 export const SET_LIMIT_SELECTED = "SET_LIMIT_SELECTED";
 export const SET_DATA_CHART_AREA_SYMBOL = "SET_DATA_CHART_AREA_SYMBOL";
+export const SET_SHOW_CALENDER = "SET_SHOW_CALENDER";
 
 export function setShowApps(value) {
   return (dispatch) => {
@@ -205,6 +206,15 @@ export function setShowProfile(value) {
   return (dispatch) => {
     dispatch({
       type: SET_SHOW_PROFILE,
+      payload: value,
+    });
+  };
+}
+
+export function setShowCalender(value) {
+  return (dispatch) => {
+    dispatch({
+      type: SET_SHOW_CALENDER,
       payload: value,
     });
   };

@@ -11,6 +11,7 @@ import {
   SET_CURRENT_SYMBOL_COMMENT,
   SET_SHOW_MODAL_COMMENTS,
   SET_SHOW_PROFILE,
+  SET_SHOW_CALENDER,
   SET_SHOW_MESSAGE,
   SET_SHOW_APPS,
   SET_SHOW_STATS,
@@ -88,7 +89,7 @@ const initialState = {
   modalComments: false,
   currentSymbol: {},
   showProfile: false,
-  showMessage: false,
+  showCalender: false,
   showApps: false,
   showStats: false,
   candleSelected: "",
@@ -174,6 +175,11 @@ export const HomeReducer = (state = initialState, action) => {
         favorite: action.payload,
       };
     case SET_CANDLE_SELECTED:
+      return {
+        ...state,
+        candleSelected: action.payload,
+      };
+    case SET_SHOW_CALENDER:
       return {
         ...state,
         candleSelected: action.payload,

@@ -2,6 +2,7 @@ import React from "react";
 import SearchIcon from "../../../assets/images/search.svg";
 import { setSearch } from "../../../redux/home/home-action";
 import { useDispatch, useSelector } from "react-redux";
+import './search.css'
 
 const Search = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,8 @@ const Search = () => {
       <input
         onChange={changeSearch}
         value={search}
-        className="bg-search-color h-10 w-full rounded-full  pr-11  text-black"
+        
+        className="bg-search-color h-10 w-100 rounded-full  pr-11  text-black "
         type="text"
         placeholder="نام نماد را جستجو کنید"
       />
